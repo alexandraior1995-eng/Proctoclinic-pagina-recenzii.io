@@ -3,6 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Helps reduce browser caching while testing -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
   <title>Lasă o recenzie – Proctoclinic</title>
 
   <style>
@@ -18,8 +24,8 @@
 
     .card {
       background: white;
-      padding: 30px 26px;
-      border-radius: 20px;
+      padding: 32px 26px;
+      border-radius: 22px;
       max-width: 430px;
       width: 92%;
       text-align: center;
@@ -27,7 +33,7 @@
     }
 
     .top-stars {
-      font-size: 22px;
+      font-size: 23px;
       margin-bottom: 10px;
       letter-spacing: 2px;
     }
@@ -52,31 +58,37 @@
       margin-bottom: 8px;
     }
 
-    .rating {
-      display: inline-flex;
-      flex-direction: row-reverse;
-      justify-content: center;
-      gap: 7px;
-      margin: 8px 0 16px;
+    .small-note {
+      font-size: 12px;
+      color: #888;
+      margin-top: -2px;
+      margin-bottom: 12px;
     }
 
-    .rating a {
-      font-size: 46px;
+    .rating {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 0 18px;
+    }
+
+    .star {
+      font-size: 48px;
       color: #d7dce2;
       text-decoration: none;
       line-height: 1;
-      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease;
       cursor: pointer;
+      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease;
     }
 
-    .rating a:hover,
-    .rating a:hover ~ a {
+    .star:hover,
+    .star.active {
       color: #fbbc04;
       transform: scale(1.14);
       text-shadow: 0 4px 14px rgba(251, 188, 4, 0.35);
     }
 
-    .rating a:active {
+    .star:active {
       transform: scale(0.96);
     }
 
@@ -102,13 +114,6 @@
       margin-top: 16px;
       line-height: 1.45;
     }
-
-    .small-note {
-      font-size: 12px;
-      color: #888;
-      margin-top: -4px;
-      margin-bottom: 12px;
-    }
   </style>
 </head>
 
@@ -126,38 +131,20 @@
     </p>
 
     <div class="question">Cum a fost experiența dumneavoastră?</div>
-    <div class="small-note">Atingeți o stea pentru a lăsa o recenzie pe Google.</div>
+    <div class="small-note">
+      Atingeți o stea pentru a lăsa o recenzie pe Google.
+    </div>
 
-    <div class="rating" aria-label="Alegeți numărul de stele pentru recenzia Google">
-      <a href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="5 stele">★</a>
-
-      <a href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="4 stele">★</a>
-
-      <a href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="3 stele">★</a>
-
-      <a href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="2 stele">★</a>
-
-      <a href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="1 stea">★</a>
+    <div class="rating" aria-label="Alegeți numărul de stele">
+      <a class="star" data-rating="1" href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg" aria-label="1 stea">★</a>
+      <a class="star" data-rating="2" href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg" aria-label="2 stele">★</a>
+      <a class="star" data-rating="3" href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg" aria-label="3 stele">★</a>
+      <a class="star" data-rating="4" href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg" aria-label="4 stele">★</a>
+      <a class="star" data-rating="5" href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg" aria-label="5 stele">★</a>
     </div>
 
     <a class="secondary"
        href="https://www.google.com/maps/search/?api=1&query=Proctoclinic%20Bucuresti&query_place_id=ChIJERWRD_4BskARzT2DjEtLWCg"
-       target="_blank"
        rel="noopener noreferrer">
        Deschide Proctoclinic în Google Maps
     </a>
@@ -170,8 +157,37 @@
   </div>
 
   <script>
+    const stars = document.querySelectorAll(".star");
+
+    function highlightStars(rating) {
+      stars.forEach(star => {
+        const value = Number(star.dataset.rating);
+        if (value <= rating) {
+          star.classList.add("active");
+        } else {
+          star.classList.remove("active");
+        }
+      });
+    }
+
+    function resetStars() {
+      stars.forEach(star => star.classList.remove("active"));
+    }
+
+    stars.forEach(star => {
+      star.addEventListener("mouseenter", () => {
+        highlightStars(Number(star.dataset.rating));
+      });
+
+      star.addEventListener("focus", () => {
+        highlightStars(Number(star.dataset.rating));
+      });
+    });
+
+    document.querySelector(".rating").addEventListener("mouseleave", resetStars);
+
     if (/Android|iPhone/i.test(navigator.userAgent)) {
-      document.querySelector('.hint').innerText =
+      document.querySelector(".hint").innerText =
         "După ce se deschide Google, alegeți numărul de stele, scrieți recenzia, apoi apăsați „Postați”.";
     }
   </script>
