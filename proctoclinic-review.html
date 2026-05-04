@@ -13,17 +13,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
     }
 
     .card {
       background: white;
-      padding: 30px;
-      border-radius: 14px;
-      max-width: 400px;
+      padding: 28px;
+      border-radius: 16px;
+      max-width: 420px;
       width: 92%;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     }
 
     h1 {
@@ -38,13 +38,14 @@
       margin-bottom: 18px;
     }
 
-    .button {
+    .btn {
       display: block;
       padding: 14px;
       margin-top: 10px;
-      border-radius: 8px;
+      border-radius: 10px;
       text-decoration: none;
       font-weight: bold;
+      transition: 0.2s ease;
     }
 
     .primary {
@@ -61,42 +62,64 @@
       color: #333;
     }
 
-    .small {
+    .secondary:hover {
+      background: #e5e7ea;
+    }
+
+    .hint {
       font-size: 12px;
-      color: #888;
-      margin-top: 12px;
+      color: #777;
+      margin-top: 14px;
+      line-height: 1.4;
+    }
+
+    .stars {
+      font-size: 18px;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 
 <body>
+
   <div class="card">
+
+    <div class="stars">⭐⭐⭐⭐⭐</div>
 
     <h1>Thank you for visiting Proctoclinic</h1>
 
     <p>
-      If your experience was positive, please take a moment to leave us a Google review.
-      It helps other patients find trusted care and supports our clinic.
+      Your feedback helps other patients choose the right care and helps us improve our services.
+      If you had a positive experience, please leave a quick Google review.
     </p>
 
-    <!-- PRIMARY ACTION -->
-    <a class="button primary"
-       href="https://www.google.com/maps/place/?q=place_id:ChIJr8lC3l0BskAR0W3z3Yl9l6A"
+    <!-- PRIMARY (best available Google trigger) -->
+    <a class="btn primary"
+       href="https://search.google.com/local/writereview?placeid=ChIJr8lC3l0BskAR0W3z3Yl9l6A"
        target="_blank">
        Leave a Google Review
     </a>
 
-    <!-- SECONDARY HELP BUTTON -->
-    <a class="button secondary"
-       href="https://www.google.com/search?q=Proctoclinic+Bucuresti+reviews"
+    <!-- FALLBACK (always works) -->
+    <a class="btn secondary"
+       href="https://www.google.com/maps/search/?api=1&query=Proctoclinic+Bucuresti"
        target="_blank">
-       Open Reviews Page
+       Open Google Reviews Page
     </a>
 
-    <div class="small">
-      Tip: Tap “Reviews” → “Write a review” if prompted
+    <div class="hint">
+      Tip: After opening Google, tap “Reviews” → “Write a review”.
     </div>
 
   </div>
+
+  <script>
+    // Optional: lightweight mobile optimization hint (no tracking)
+    if (/Android|iPhone/i.test(navigator.userAgent)) {
+      document.querySelector('.hint').innerText =
+        "Tip: Tap 'Reviews' → 'Write a review' after opening Google.";
+    }
+  </script>
+
 </body>
 </html>
