@@ -74,8 +74,9 @@
     }
 
     .stars {
-      font-size: 18px;
+      font-size: 24px;
       margin-bottom: 8px;
+      letter-spacing: 2px;
     }
   </style>
 </head>
@@ -89,35 +90,36 @@
     <h1>Thank you for visiting Proctoclinic</h1>
 
     <p>
-      Your feedback helps other patients choose the right care and helps us improve our services.
-      If you had a positive experience, please leave a quick Google review.
+      Your feedback helps other patients make informed choices and helps us improve our services.
+      Please leave an honest Google review about your experience.
     </p>
 
-    <!-- PRIMARY (best available Google trigger) -->
+    <!-- PRIMARY REVIEW BUTTON WITH NEW PLACE ID -->
     <a class="btn primary"
-       href="https://search.google.com/local/writereview?placeid=ChIJr8lC3l0BskAR0W3z3Yl9l6A"
-       target="_blank">
+       href="https://search.google.com/local/writereview?placeid=ChIJERWRD_4BskARzT2DjEtLWCg"
+       target="_blank"
+       rel="noopener noreferrer">
        Leave a Google Review
     </a>
 
-    <!-- FALLBACK (always works) -->
+    <!-- FALLBACK GOOGLE MAPS BUTTON USING THE SAME PLACE ID -->
     <a class="btn secondary"
-       href="https://www.google.com/maps/search/?api=1&query=Proctoclinic+Bucuresti"
-       target="_blank">
-       Open Google Reviews Page
+       href="https://www.google.com/maps/search/?api=1&query=Proctoclinic%20Bucuresti&query_place_id=ChIJERWRD_4BskARzT2DjEtLWCg"
+       target="_blank"
+       rel="noopener noreferrer">
+       Open Proctoclinic on Google Maps
     </a>
 
     <div class="hint">
-      Tip: After opening Google, tap “Reviews” → “Write a review”.
+      Tip: After Google opens, choose stars, write your review, then tap “Post”.
     </div>
 
   </div>
 
   <script>
-    // Optional: lightweight mobile optimization hint (no tracking)
     if (/Android|iPhone/i.test(navigator.userAgent)) {
       document.querySelector('.hint').innerText =
-        "Tip: Tap 'Reviews' → 'Write a review' after opening Google.";
+        "Tip: After Google opens, choose stars, write your review, then tap “Post”.";
     }
   </script>
 
